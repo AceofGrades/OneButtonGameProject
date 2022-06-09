@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
+    public Rigidbody2D rb;
+    public bool isGrounded = true;
+    public bool canDoubleJump = false;
     public float jumpHeight;
-    public static bool isJumping = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Transform groundCheck;
+    public float groundCheckRadius;
+    public LayerMask groundLayer;
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isJumping == false)
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpHeight), ForceMode2D.Impulse);
+            if (isGrounded)
+            {
+                CanJump();
+                canDoubleJump = true;
+            }
+            else if (canDoubleJump)
+            {
+                CanJump();
+                canDoubleJump = false;
+            }
         }
     }
 
@@ -26,7 +37,7 @@ public class Jump : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
-            isJumping = false;
+            isGrounded = true;
         }
     }
 
@@ -34,7 +45,12 @@ public class Jump : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
-            isJumping = true;
+            isGrounded = false;
         }
+    }
+
+    public void CanJump()
+    {
+        rb.velocity = Vector2.up * jumpHeight;
     }
 }
