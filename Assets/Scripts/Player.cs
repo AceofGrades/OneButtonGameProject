@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Jump : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
     public bool isGrounded = true;
@@ -12,6 +13,10 @@ public class Jump : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask groundLayer;
+
+    private float topScore = 0.0f;
+
+    public Text scoreText;
 
     // Update is called once per frame
     void Update()
@@ -31,6 +36,13 @@ public class Jump : MonoBehaviour
                 canDoubleJump = false;
             }
         }
+
+        if(rb.velocity.y > 0 && transform.position.y > topScore)
+        {
+            topScore = transform.position.y;
+        }
+
+        scoreText.text = "Score: " + Mathf.Round(topScore).ToString();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
