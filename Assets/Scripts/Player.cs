@@ -26,21 +26,21 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (isGrounded)
+            if (isGrounded) // Checks if the player is grounded by the time the Space button is pressed
             {
-                CanJump();
-                canDoubleJump = true;
+                CanJump(); // Jump!
+                canDoubleJump = true; // Allow the player to jump a second time
             }
             else if (canDoubleJump)
             {
-                CanJump();
-                canDoubleJump = false;
+                CanJump(); // Jump again!
+                canDoubleJump = false; // Can't double jump anymore
             }
         }
 
         if(rb.velocity.y > 0 && transform.position.y > topScore)
         {
-            topScore = transform.position.y;
+            topScore = transform.position.y; // Turn the top score into player's y position
         }
 
         scoreText.text = "Score: " + Mathf.Round(topScore).ToString();
@@ -50,12 +50,12 @@ public class Player : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
-            isGrounded = true;
+            isGrounded = true; // If the player touches an object with the Ground tag, isGrounded is set to true
         }
 
         if(collision.collider.tag == "Death")
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(0); // If the player touches the barrier tagged with Death, the scene restarts
         }
     }
 

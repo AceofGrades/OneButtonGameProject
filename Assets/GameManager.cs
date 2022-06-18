@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         Vector3 spawnPosition1 = new Vector3();
         //Vector3 spawnPosition2 = new Vector3();
 
-        for (int i = 0; i < platform1Count; i++)
+        for (int i = 0; i < platform1Count; i++) // This script randomly generates platforms for players to jump on
         {
             spawnPosition1.y += Random.Range(2f, 5f);
             spawnPosition1.x = Random.Range(-3f, 3f);
